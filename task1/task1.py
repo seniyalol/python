@@ -13,7 +13,7 @@ def main():
         print("Usage:\npython3 task1.py nb, base ")
         exit(1)
     nb, base  = sys.argv[1:3]
-    print(itoBase(int(nb), str(base) ))
+    print(itoBase(int(nb), int(base) ))
 main()  
 
 
