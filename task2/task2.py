@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
+import ast
+from math import sqrt
 
-def  per( centerX, centerY, centerZ, r, x1, y1, z1, x2, y2, z2):
-    
+def per( centerX, centerY, centerZ, r, x1, y1, z1, x2, y2, z2):
     
     a = (x2-x1)*2+(y2-y1)*2+(z2-z1)*2
-    b = 2*((x2-x1)(x1-centerX)+(centerY-y1)(y1-centerY)+(z2-z1)(z1-centerZ)) 
+    b = 2*((x2-x1)*(x1-centerX)+(centerY-y1)*(y1-centerY)+(z2-z1)*(z1-centerZ)) 
     c = (x1-centerX)*(x1-centerX)+(y1-centerY)*(y1-centerY)+(z1-centerZ)*(z1-centerZ)-r*r
     
     d0 = b*b-4*a*c
@@ -33,6 +34,26 @@ def  per( centerX, centerY, centerZ, r, x1, y1, z1, x2, y2, z2):
         
     
 def main():
+    filename = sys.argv[1]
+    with open(filename, 'r') as f:
+        dict_ = f.read()
+        d = ast.literal_eval(dict_)
+        c = d['sphere']['center']
+        r = d['sphere']['radius']
+        l = d['line']
+        result = per(c[0],
+            c[1],
+            c[2], 
+            r,
+            l[0][0],
+            l[0][1],
+            l[0][2],
+            l[1][0],
+            l[1][1],
+            l[1][2])
+        print(result)
+        print('done')
+        exit(1)
     if len(sys.argv) != 11:
         print("Usage:\npython3 task2.py centerX, centerY, centerZ, r, x1, y1, z1, x2, y2, z2")
         exit(1)
